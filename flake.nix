@@ -54,11 +54,7 @@
         gdb
         openlibm
         ccls
-        lua5_3
-        lua5_3.pkgs.lgi
-	lua53Packages.stdlib
         gtk4
-	#lua53Packages.gobject
       ];
 
       nativeBuildInputs = [
