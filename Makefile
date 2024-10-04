@@ -21,7 +21,7 @@ tinywl.o: xdg-shell-protocol.h
 tinywl: xdg-shell-protocol.o tinywl.o
 
 # Library dependencies
-tinywl: CFLAGS+=$(shell pkg-config --cflags wayland-server wlroots xkbcommon lua5.3 wayland-protocols wayland-client cairo gl) -Iinclude
+tinywl: CFLAGS+=$(shell pkg-config --cflags wayland-server wlroots xkbcommon lua5.3 wayland-protocols wayland-client cairo gl) -Iinclude -I.
 tinywl: LDLIBS+=$(shell pkg-config --libs wayland-server wlroots xkbcommon lua5.3 wayland-protocols wayland-client cairo gl) -lrt -lm
 
 install:

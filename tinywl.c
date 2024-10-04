@@ -120,11 +120,11 @@ static void focus_toplevel(struct tinywl_toplevel *toplevel, struct wlr_surface 
 		 * it no longer has focus and the client will repaint accordingly, e.g.
 		 * stop displaying a caret.
 		 */
-		struct wlr_xdg_toplevel *prev_toplevel =
+		/*struct wlr_xdg_toplevel *prev_toplevel =
 			wlr_xdg_toplevel_try_from_wlr_surface(prev_surface);
 		if (prev_toplevel != NULL) {
 			wlr_xdg_toplevel_set_activated(prev_toplevel, false);
-		}
+		}*/
 	}
 	struct wlr_keyboard *keyboard = wlr_seat_get_keyboard(seat);
 	/* Move the toplevel to the front */
@@ -671,20 +671,6 @@ static void xdg_toplevel_unmap(struct wl_listener *listener, void *data) {
 	wl_list_remove(&toplevel->link);
 }
 
-static void xdg_toplevel_destroy(struct wl_listener *listener, void *data) {
-	/* Called when the xdg_toplevel is destroyed. */
-	struct tinywl_toplevel *toplevel = wl_container_of(listener, toplevel, destroy);
-
-	wl_list_remove(&toplevel->map.link);
-	wl_list_remove(&toplevel->unmap.link);
-	wl_list_remove(&toplevel->destroy.link);
-	wl_list_remove(&toplevel->request_move.link);
-	wl_list_remove(&toplevel->request_resize.link);
-	wl_list_remove(&toplevel->request_maximize.link);
-	wl_list_remove(&toplevel->request_fullscreen.link);
-
-	free(toplevel);
-}
 
 static void begin_interactive(struct tinywl_toplevel *toplevel,
 		enum tinywl_cursor_mode mode, uint32_t edges) {
@@ -804,7 +790,7 @@ static void server_new_xdg_surface(struct wl_listener *listener, void *data) {
 	wl_signal_add(&xdg_surface->surface->events.map, &toplevel->map);
 	toplevel->unmap.notify = xdg_toplevel_unmap;
 	wl_signal_add(&xdg_surface->surface->events.unmap, &toplevel->unmap);
-	toplevel->destroy.notify = xdg_toplevel_destroy;
+	// toplevel->destroy.notify = xdg_toplevel_destroy;
 	wl_signal_add(&xdg_surface->events.destroy, &toplevel->destroy);
 
 	/* cotd */
